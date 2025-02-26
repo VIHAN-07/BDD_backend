@@ -1,56 +1,28 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const bddSchema = mongoose.Schema({
-    "type": "object",
-    "properties": {
-        "totalDonors": {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Total number of blood donors in the system."
-        },
-        "bloodGroups": {
-            "type": "object",
-            "properties": {
-                "A+": { "type": "integer", "minimum": 0 },
-                "A-": { "type": "integer", "minimum": 0 },
-                "B+": { "type": "integer", "minimum": 0 },
-                "B-": { "type": "integer", "minimum": 0 },
-                "O+": { "type": "integer", "minimum": 0 },
-                "O-": { "type": "integer", "minimum": 0 },
-                "AB+": { "type": "integer", "minimum": 0 },
-                "AB-": { "type": "integer", "minimum": 0 }
-            },
-            "additionalProperties": false,
-            "description": "Breakdown of donors by blood group."
-        },
-        "recentDonors": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Full name of the donor."
-                    },
-                    "bloodGroup": {
-                        "type": "string",
-                        "enum": ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
-                        "description": "Blood group of the donor."
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "Date of the donor's last donation."
-                    }
-                },
-                "required": ["name", "bloodGroup", "date"],
-                "additionalProperties": false
-            },
-            "description": "List of the most recent blood donors."
-        }
+const bddSchema = new mongoose.Schema({
+    totalDonors: { type: Number, default: 0 },
+    bloodGroups: {
+        "A+": { type: Number, default: 0 },
+        "A-": { type: Number, default: 0 },
+        "B+": { type: Number, default: 0 },
+        "B-": { type: Number, default: 0 },
+        "O+": { type: Number, default: 0 },
+        "O-": { type: Number, default: 0 },
+        "AB+": { type: Number, default: 0 },
+        "AB-": { type: Number, default: 0 }
     },
-    "required": ["totalDonors", "bloodGroups", "recentDonors"],
-    "additionalProperties": false
+    recentDonors: [
+        {
+            name: { type: String, required: true },
+            bloodGroup: {
+                type: String,
+                enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
+                required: true
+            },
+            date: { type: Date, required: true }
+        }
+    ]
 });
 
-export default mongoose.model('BDD', bddSchema);
+export default mongoose.model("BDD", bddSchema);
