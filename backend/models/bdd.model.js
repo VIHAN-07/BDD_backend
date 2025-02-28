@@ -20,7 +20,8 @@ const bddSchema = new mongoose.Schema({
                 enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
                 required: true
             },
-            date: { type: Date, required: true }
+            date: { type: Date, required: true },
+            approved: {type: Boolean, default: false}
         }
     ]
 });
