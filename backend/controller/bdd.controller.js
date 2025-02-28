@@ -54,7 +54,7 @@ export const getDonors = async (req, res) => {
 export const getNewDonors = async (req, res) => {
     try {
         const data = await BDD.findOne();
-        const approvedDonors = data.recentDonors.filter(donor => !donor.approved);
+        const approvedDonors = data.recentDonors;
 
         if (!approvedDonors) {
             return res.status(404).json({ message: "No data found" });
