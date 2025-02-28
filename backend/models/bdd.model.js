@@ -20,10 +20,17 @@ const bddSchema = new mongoose.Schema({
                 enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
                 required: true
             },
-            date: { type: Date, required: true },
+            mobile_number: { type: String, required: true },
+            category: {
+                type: String,
+                enum: ["teacher", "student"],
+                required: true
+            },
             approved: {type: Boolean, default: false}
         }
     ]
+},{
+    timestamps: true
 });
 
 export default mongoose.model("BDD", bddSchema);
