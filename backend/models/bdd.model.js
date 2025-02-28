@@ -15,6 +15,7 @@ const bddSchema = new mongoose.Schema({
     recentDonors: [
         {
             name: { type: String, required: true },
+            reg_number: { type: String, required: true },
             bloodGroup: {
                 type: String,
                 enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
@@ -23,7 +24,7 @@ const bddSchema = new mongoose.Schema({
             mobile_number: { type: String, required: true },
             category: {
                 type: String,
-                enum: ["teacher", "student"],
+                enum: ["Faculty", "Student"],
                 required: true
             },
             approved: {type: Boolean, default: false}

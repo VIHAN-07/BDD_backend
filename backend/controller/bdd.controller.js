@@ -2,9 +2,9 @@ import BDD from '../models/bdd.model.js';
 
 export const newDonor = async (req, res) => {
     try {
-        const { name, bloodGroup, date } = req.body;
+        const { name, reg_number, bloodGroup, mobile_number, category } = req.body;
   
-        if (!name || !bloodGroup || !date) {
+        if (!name || !reg_number || !bloodGroup || !mobile_number || !category) {
             return res.status(400).json({ error: "Invalid data" });
         }
 
@@ -22,7 +22,7 @@ export const newDonor = async (req, res) => {
         if (!stats.bloodGroups.hasOwnProperty(bloodGroup)) {
             return res.status(400).json({ error: "Invalid blood group" });
         }
-        stats.recentDonors.unshift({ name, bloodGroup, date });
+        stats.recentDonors.unshift({ name, reg_number, bloodGroup, mobile_number, category});
 
         await stats.save();
 
@@ -67,10 +67,10 @@ export const getNewDonors = async (req, res) => {
 
 export const approveDonors = async (req, res) => {
     try {
-        const { donorNames } = req.body; 
+        const { donorRegno } = req.body; 
 
-        if (!donorNames || !Array.isArray(donorNames) || donorNames.length === 0) {
-            return res.status(400).json({ error: "Valid donor names are required" });
+        if (!donorRegno || !Array.isArray(donorRegno) || donorRegno.length === 0) {
+            return res.status(400).json({ error: "Valid donor Reg_numbers are required" });
         }
 
         let stats = await BDD.findOne();
@@ -80,8 +80,8 @@ export const approveDonors = async (req, res) => {
 
         let approvedCount = 0;
 
-        donorNames.forEach(donorName => {
-            const donorIndex = stats.recentDonors.findIndex(donor => donor.name === donorName && !donor.approved);
+        donorRegno.forEach(donorRegno => {
+            const donorIndex = stats.recentDonors.findIndex(donor => donor.reg_number === donorRegno && !donor.approved);
 
             if (donorIndex !== -1) {
                 stats.recentDonors[donorIndex].approved = true;
