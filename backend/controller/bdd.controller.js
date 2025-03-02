@@ -62,6 +62,18 @@ export const getNewDonors = async (req, res) => {
     }
 };
 
+export const getCertifiedDonors = async (req, res) => {
+    try {
+        const data = await BDD.findOne();
+        if (!data) return res.status(404).json({ message: "No data found" });
+
+        res.status(200).json(data.recentDonors.filter(donor => donor.approved));
+    } catch (error) {
+        console.error("Error in getNewDonors:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
 export const approveDonors = async (req, res) => {
     try {
         const { donorRegno } = req.body;
