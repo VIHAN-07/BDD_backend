@@ -32,7 +32,6 @@ app.use(cors({
 }));
 
 // Set up session (must be before passport.session())
-import MongoStore from 'connect-mongo';
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'yourSecretKey',
