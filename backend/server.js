@@ -24,12 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Set up CORS (Cross-Origin Resource Sharing)
-app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:5000'], // Allow both frontend and API URLs
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use();
 
 // Set up session (must be before passport.session())
 
