@@ -1,20 +1,17 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
-import LocalStrategy from 'passport-local';
+import { Strategy as LocalStrategy } from 'passport-local';
 import { connectDB } from './config/db.js';
 import bddRoutes from './routes/bdd.route.js';
 import User from './models/user.model.js';
 
-
-
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB before starting the server
+// Connect to MongoDB
 connectDB();
 
 const app = express();
@@ -23,11 +20,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Set up CORS (Cross-Origin Resource Sharing)
-app.use();
-
 // Set up session (must be before passport.session())
-
 app.use(session({
     secret: process.env.SESSION_SECRET || 'yourSecretKey',
     resave: false,
@@ -42,7 +35,6 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
 }));
-
 
 // Initialize Passport.js
 app.use(passport.initialize());
@@ -60,4 +52,3 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
-
